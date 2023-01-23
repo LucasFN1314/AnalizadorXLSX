@@ -19,6 +19,9 @@
               <th scope="col">Departamento</th>
               <th scope="col">Realizadas</th>
               <th scope="col">Profesionales</th>
+              <th scope="col">
+                <button type="button" class="btn btn-outline-success" v-on:click="generate_excel()">Descargar</button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -26,8 +29,13 @@
             <tr v-for="(departamento, key) in departamentos" :key="key">
               <td>{{ departamento.nombre }}</td>
               <td>{{ departamento.realizadas }}</td>
-              <td><button type="button" class="btn btn-outline-success"
-                  v-on:click="this.$refs.info_modal.show(departamento)">Ver</button></td>
+              <td>
+                <button type="button" class="btn btn-outline-success" v-on:click="this.$refs.info_modal.show(departamento)">Ver</button>
+                </td>
+                <td>
+                <button type="button" class="btn btn-outline-success" v-on:click="generate_excel()">Descargar</button>
+                </td>
+
             </tr>
 
           </tbody>
@@ -93,6 +101,7 @@ export default {
   methods: {
 
     read_data() {
+      this.departamentos = [];
       readXlsxFile($('#input_file_1')[0].files[0]).then((rows) => {
         rows.splice(0, 1);
         rows.map((row) => {
@@ -189,6 +198,9 @@ export default {
       });
       return index;
     },
+    generate_excel() {
+      console.log(this.departamentos);
+    }
 
   },
   components: {
